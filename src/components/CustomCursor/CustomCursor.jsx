@@ -31,14 +31,18 @@ export default function CustomCursor() {
       })
     }
 
-    const onEnterLink = () => {
-      gsap.to(ring, { scale: 1.8, opacity: 0.6, duration: 0.3, ease: 'power2.out' })
-      gsap.to(dot, { scale: 0, duration: 0.2 })
+    const onMouseOver = (e) => {
+      if (e.target.closest('a, button, [data-cursor]')) {
+        gsap.to(ring, { scale: 1.8, opacity: 0.6, duration: 0.3, ease: 'power2.out' })
+        gsap.to(dot, { scale: 0, duration: 0.2 })
+      }
     }
 
-    const onLeaveLink = () => {
-      gsap.to(ring, { scale: 1, opacity: 1, duration: 0.3, ease: 'power2.out' })
-      gsap.to(dot, { scale: 1, duration: 0.2 })
+    const onMouseOut = (e) => {
+      if (e.target.closest('a, button, [data-cursor]')) {
+        gsap.to(ring, { scale: 1, opacity: 1, duration: 0.3, ease: 'power2.out' })
+        gsap.to(dot, { scale: 1, duration: 0.2 })
+      }
     }
 
     const onMouseDown = () => {
@@ -54,33 +58,15 @@ export default function CustomCursor() {
     document.addEventListener('mousemove', onMove)
     document.addEventListener('mousedown', onMouseDown)
     document.addEventListener('mouseup', onMouseUp)
-
-    const interactiveEls = document.querySelectorAll('a, button, [data-cursor]')
-    interactiveEls.forEach(el => {
-      el.addEventListener('mouseenter', onEnterLink)
-      el.addEventListener('mouseleave', onLeaveLink)
-    })
-
-    // MutationObserver to catch dynamically added elements
-    const observer = new MutationObserver(() => {
-      document.querySelectorAll('a, button, [data-cursor]').forEach(el => {
-        el.removeEventListener('mouseenter', onEnterLink)
-        el.removeEventListener('mouseleave', onLeaveLink)
-        el.addEventListener('mouseenter', onEnterLink)
-        el.addEventListener('mouseleave', onLeaveLink)
-      })
-    })
-    observer.observe(document.body, { childList: true, subtree: true })
+    document.addEventListener('mouseover', onMouseOver)
+    document.addEventListener('mouseout', onMouseOut)
 
     return () => {
       document.removeEventListener('mousemove', onMove)
       document.removeEventListener('mousedown', onMouseDown)
       document.removeEventListener('mouseup', onMouseUp)
-      interactiveEls.forEach(el => {
-        el.removeEventListener('mouseenter', onEnterLink)
-        el.removeEventListener('mouseleave', onLeaveLink)
-      })
-      observer.disconnect()
+      document.removeEventListener('mouseover', onMouseOver)
+      document.removeEventListener('mouseout', onMouseOut)
     }
   }, [])
 

@@ -40,14 +40,19 @@ export default function App() {
       smoothWheel: true,
     })
 
+    let rafId;
+
     function raf(time) {
       lenis.raf(time)
       ScrollTrigger.update()
-      requestAnimationFrame(raf)
+      rafId = requestAnimationFrame(raf)
     }
-    requestAnimationFrame(raf)
+    rafId = requestAnimationFrame(raf)
 
-    return () => lenis.destroy()
+    return () => {
+      lenis.destroy()
+      cancelAnimationFrame(rafId)
+    }
   }, [projectId])
 
   if (projectId !== null) {
