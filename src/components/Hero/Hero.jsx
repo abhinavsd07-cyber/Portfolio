@@ -179,6 +179,9 @@ export default function Hero({ loaded }) {
         0.15
       )
 
+      // Make the h1 wrapper visible now that we are going to animate its children
+      tl.set(nameRef.current, { opacity: 1 }, 0)
+
       // Name — letter by letter
       tl.fromTo(
         chars,
@@ -266,7 +269,7 @@ export default function Hero({ loaded }) {
           <div className="hero-content">
             <HeroBadge innerRef={badgeRef} />
             <p ref={greetingRef} className="hero-greeting" style={{ opacity: 0 }}>Hello, I'm</p>
-            <h1 ref={nameRef} className="hero-name" style={{ perspective: '600px' }}>Abhinav</h1>
+            <h1 ref={nameRef} className="hero-name" style={{ perspective: '600px', opacity: 0 }}>Abhinav</h1>
             <div ref={roleRef} className="hero-role" style={{ opacity: 0 }}>
               <span className="hero-role-line" />
               Full Stack Developer
