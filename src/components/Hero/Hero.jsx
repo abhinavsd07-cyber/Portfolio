@@ -67,7 +67,7 @@ function HeroBadge({ innerRef }) {
         <img 
           src="https://www.google.com/s2/favicons?domain=aabasoft.com&sz=256" 
           alt="Aabasoft" 
-          style={{ width: '16px', height: '16px', borderRadius: '4px', objectFit: 'contain' }} 
+          style={{ width: '24px', height: '24px', borderRadius: '4px', objectFit: 'contain' }} 
         />
         <span style={{ textDecoration: 'underline' }}>Aabasoft</span>
       </a>
