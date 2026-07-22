@@ -159,89 +159,92 @@ export default function Hero({ loaded }) {
   }, [])
 
   // Main hero GSAP timeline — fires after preloader
-  useEffect(() => {
-    if (!loaded || hasAnimated.current) return
-    hasAnimated.current = true
+  useLayoutEffect(() => {
+    if (!loaded) return
 
-    // Split name into chars
-    const chars = nameRef.current ? splitChars(nameRef.current) : []
+    const ctx = gsap.context(() => {
+      // Split name into chars
+      const chars = nameRef.current ? splitChars(nameRef.current) : []
 
-    const tl = gsap.timeline({ delay: 0.2 })
+      const tl = gsap.timeline({ delay: 0.2 })
 
-    // Badge
-    tl.to(badgeRef.current, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 0)
+      // Badge
+      tl.to(badgeRef.current, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 0)
 
-    // Greeting
-    tl.fromTo(
-      greetingRef.current,
-      { opacity: 0, y: 30 },
-      { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' },
-      0.15
-    )
+      // Greeting
+      tl.fromTo(
+        greetingRef.current,
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' },
+        0.15
+      )
 
-    // Name — letter by letter
-    tl.fromTo(
-      chars,
-      { opacity: 0, y: 60, rotateX: -90 },
-      {
-        opacity: 1, y: 0, rotateX: 0,
-        duration: 0.6,
-        stagger: 0.04,
-        ease: 'back.out(1.7)',
-      },
-      0.35
-    )
+      // Name — letter by letter
+      tl.fromTo(
+        chars,
+        { opacity: 0, y: 60, rotateX: -90 },
+        {
+          opacity: 1, y: 0, rotateX: 0,
+          duration: 0.6,
+          stagger: 0.04,
+          ease: 'back.out(1.7)',
+        },
+        0.35
+      )
 
-    // Role
-    tl.fromTo(
-      roleRef.current,
-      { opacity: 0, x: -40 },
-      { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' },
-      0.75
-    )
+      // Role
+      tl.fromTo(
+        roleRef.current,
+        { opacity: 0, x: -40 },
+        { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' },
+        0.75
+      )
 
-    // Description
-    tl.fromTo(
-      descRef.current,
-      { opacity: 0, y: 20 },
-      { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' },
-      0.9
-    )
+      // Description
+      tl.fromTo(
+        descRef.current,
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' },
+        0.9
+      )
 
-    // Actions
-    tl.fromTo(
-      actionsRef.current,
-      { opacity: 0, y: 20 },
-      { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' },
-      1.05
-    )
+      // Actions
+      tl.fromTo(
+        actionsRef.current,
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' },
+        1.05
+      )
 
-    // Socials
-    tl.to(socialsRef.current, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 1.15)
+      // Socials
+      tl.to(socialsRef.current, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 1.15)
 
-    // Image
-    tl.fromTo(
-      imageRef.current,
-      { opacity: 0, scale: 0.8, x: 60 },
-      { opacity: 1, scale: 1, x: 0, duration: 0.9, ease: 'power3.out' },
-      0.4
-    )
+      // Image
+      tl.fromTo(
+        imageRef.current,
+        { opacity: 0, scale: 0.8, x: 60 },
+        { opacity: 1, scale: 1, x: 0, duration: 0.9, ease: 'power3.out' },
+        0.4
+      )
 
-    // Stats stagger
-    tl.fromTo(
-      statsRefs.current,
-      { opacity: 0, y: 30, scale: 0.8 },
-      { opacity: 1, y: 0, scale: 1, duration: 0.5, stagger: 0.1, ease: 'back.out(1.7)' },
-      0.8
-    )
+      // Stats stagger
+      tl.fromTo(
+        statsRefs.current,
+        { opacity: 0, y: 30, scale: 0.8 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.5, stagger: 0.1, ease: 'back.out(1.7)' },
+        0.8
+      )
 
-    // Scroll indicator
-    tl.fromTo(
-      scrollIndicatorRef.current,
-      { opacity: 0 },
-      { opacity: 1, duration: 0.5 },
-      1.4
-    )
+      // Scroll indicator
+      tl.fromTo(
+        scrollIndicatorRef.current,
+        { opacity: 0 },
+        { opacity: 1, duration: 0.5 },
+        1.4
+      )
+    }, sectionRef)
+
+    return () => ctx.revert()
   }, [loaded])
 
   const scrollToProjects = e => {
