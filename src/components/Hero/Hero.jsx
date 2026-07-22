@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useLayoutEffect, useRef } from 'react'
 import { HERO_STATS } from '../../data/index.js'
 import propic from '../../assets/me.JPG'
 import gsap from 'gsap'
