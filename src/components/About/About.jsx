@@ -1,6 +1,6 @@
 import { useRef, useLayoutEffect, useEffect } from 'react'
 import { ABOUT_HIGHLIGHTS } from '../../data/index.js'
-import aboutimg1 from '../../assets/aboutimg1.JPG'
+import aboutimg1 from '../../assets/aboutimg1.jpg'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
